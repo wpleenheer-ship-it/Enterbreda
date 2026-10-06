@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Evenementen – Enter Breda (voorbeeld)</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#5b34a0;--purple-d:#44247f;--green:#86b300;--green-d:#6f9700;--bg:#f3f2f6;--card:#fff;--text:#1d1530;--muted:#6b6482;--line:#cfc6e6;--tag-bg:#e3f4f4;--tag-fg:#17696b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17112a;--card:#241b3d;--text:#f1edfb;--muted:#aaa1c4;--line:#4a3d75;--tag-bg:#1d4446;--tag-fg:#8fe0e2}}
+:root[data-theme="dark"]{--bg:#17112a;--card:#241b3d;--text:#f1edfb;--muted:#aaa1c4;--line:#4a3d75;--tag-bg:#1d4446;--tag-fg:#8fe0e2}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Outfit,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+header{background:var(--purple);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:14px 28px;flex-wrap:wrap;gap:10px}
+.logo{font-weight:700;letter-spacing:.5px;font-size:20px}.logo span{font-weight:400;opacity:.85}
+nav{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+nav a{color:#fff;text-decoration:none;font-size:14px;font-weight:500;padding:4px 0;border-bottom:2px solid transparent}
+nav a.active{border-color:var(--green)}
+.user{width:34px;height:34px;border-radius:8px;background:#fff;color:var(--purple);display:grid;place-items:center;font-size:16px}
+.hero{background:linear-gradient(160deg,var(--purple),var(--purple-d));color:#fff;text-align:center;padding:56px 20px 90px}
+.hero h1{margin:0 0 12px;font-size:clamp(28px,5vw,42px)}
+.hero p{margin:0 auto;max-width:560px;font-size:14px;line-height:1.6;opacity:.92}
+.filter{background:var(--card);color:var(--text);max-width:720px;margin:-32px auto 0;border-radius:10px;padding:16px 20px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;box-shadow:0 6px 24px rgba(40,20,80,.18);font-size:14px;position:relative}
+select{font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text)}
+.btn{background:var(--green);color:#fff;border:0;border-radius:8px;padding:10px 18px;font:600 14px Outfit,sans-serif;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--green-d)}
+main{max-width:860px;margin:0 auto;padding:48px 20px 70px}
+h2.month{margin:34px 0 18px 64px;font-size:15px;text-transform:uppercase;letter-spacing:1.5px;color:var(--purple)}
+@media (prefers-color-scheme:dark){h2.month{color:#c4aaff}}
+.timeline{position:relative}
+.timeline::before{content:"";position:absolute;left:23px;top:0;bottom:0;width:2px;background:var(--line)}
+.item{position:relative;display:flex;gap:18px;margin-bottom:22px}
+.date{flex:0 0 48px;height:56px;border-radius:10px;background:var(--purple);color:#fff;text-align:center;z-index:1;display:flex;flex-direction:column;justify-content:center;line-height:1.1;box-shadow:0 0 0 5px var(--bg)}
+.date b{font-size:20px}.date small{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85}
+.card{flex:1;background:var(--card);border-radius:12px;padding:18px 20px;box-shadow:0 2px 10px rgba(40,20,80,.08)}
+.tag{display:inline-block;background:var(--tag-bg);color:var(--tag-fg);font-size:11px;padding:3px 9px;border-radius:5px;margin-bottom:8px;font-weight:500}
+.card h3{margin:0 0 8px;font-size:18px}
+.meta{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-bottom:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn.alt{background:transparent;color:var(--purple);border:2px solid var(--purple);padding:8px 16px}
+.btn.alt:hover{background:var(--purple);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.alt{color:#c4aaff;border-color:#c4aaff}}
+:root[data-theme="dark"] .btn.alt{color:#c4aaff;border-color:#c4aaff}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:0 20px 30px}
+@media (max-width:560px){header{padding:12px 16px}h2.month{margin-left:0}.item{gap:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">ENTER <span>BREDA</span></div>
+  <nav>
+    <a href="#">Community</a><a href="#">Onderwijs</a><a href="#">Bedrijven</a><a href="#">Studentenorganisaties</a><a href="#" class="active">Evenementen</a>
+    <div class="user">👤</div>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Evenementen in Breda</h1>
+  <p>Wat gebeurt er de komende tijd in de Bredase tech- en studentenscene? Bekijk de tijdlijn, filter op jouw interesse en ontmoet anderen. #voorendoorelkaar</p>
+</section>
+
+<div class="filter">
+  <span>Ik ben een</span>
+  <select id="who"><option>Student</option><option>Professional</option><option>Bedrijf</option></select>
+  <span>op zoek naar</span>
+  <select id="cat"><option value="all">alle evenementen</option><option>Netwerken</option><option>Workshop</option><option>Game dev</option><option>Borrel</option></select>
+  <button class="btn" id="go">Find events ↵</button>
+</div>
+
+<main><div class="timeline" id="tl"></div></main>
+<footer>Voorbeeldpagina met fictieve evenementen – vervang de data in de <code>events</code>-lijst door echte items.</footer>
+
+<script>
+const events=[
+ {d:"2026-10-14",t:"Introductieborrel nieuwe studenten",c:"Borrel",time:"19:30 – 23:00",loc:"Café De Beyerd, Breda"},
+ {d:"2026-10-22",t:"Tech Meets Students: bedrijvenmarkt",c:"Netwerken",time:"13:00 – 17:00",loc:"Avans Hogeschool, Hogeschoollaan"},
+ {d:"2026-11-04",t:"Workshop: je eerste website bouwen",c:"Workshop",time:"18:00 – 21:00",loc:"Chasséveld Innovation Hub"},
+ {d:"2026-11-12",t:"Dutch Game Week: Breda Edition",c:"Game dev",time:"10:00 – 18:00",loc:"NHL Stenden / Breda Game Campus"},
+ {d:"2026-11-26",t:"Pitch Night: studenten × startups",c:"Netwerken",time:"19:00 – 22:00",loc:"Chassé Theater, foyer"},
+ {d:"2026-12-03",t:"Workshop: VR & AR voor beginners",c:"Workshop",time:"17:30 – 20:30",loc:"Breda University of Applied Sciences"},
+ {d:"2026-12-17",t:"Kerstborrel Studentenorganisaties",c:"Borrel",time:"20:00 – 01:00",loc:"Grote Markt, Breda"}
+];
+const M=["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+function gcal(e){
+  const p=n=>String(n).padStart(2,"0");
+  const [a,b]=e.time.split("–").map(s=>s.trim().split(":").map(Number));
+  const s=new Date(e.d+"T00:00:00");s.setHours(a[0],a[1]);
+  const en=new Date(e.d+"T00:00:00");en.setHours(b[0],b[1]);
+  if(en<=s)en.setDate(en.getDate()+1);
+  const f=d=>d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+"T"+p(d.getHours())+p(d.getMinutes())+"00";
+  return "https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(e.t)
+   +"&dates="+f(s)+"/"+f(en)+"&ctz=Europe/Amsterdam&location="+encodeURIComponent(e.loc)
+   +"&details="+encodeURIComponent("Evenement via Enter Breda");
+}
+const tl=document.getElementById("tl"),cat=document.getElementById("cat");
+function render(){
+  const f=cat.value,list=events.filter(e=>f==="all"||e.c===f).sort((a,b)=>a.d.localeCompare(b.d));
+  if(!list.length){tl.innerHTML='<div class="empty">Geen evenementen gevonden.</div>';return}
+  let html="",cur="";
+  for(const e of list){
+    const dt=new Date(e.d+"T12:00:00"),mk=M[dt.getMonth()]+" "+dt.getFullYear();
+    if(mk!==cur){cur=mk;html+=`<h2 class="month">${mk}</h2>`}
+    html+=`<div class="item"><div class="date"><b>${dt.getDate()}</b><small>${M[dt.getMonth()].slice(0,3)}</small></div>
+    <div class="card"><span class="tag">${e.c}</span><h3>${e.t}</h3>
+    <div class="meta"><span>🕒 ${e.time}</span><span>📍 ${e.loc}</span></div>
+    <div class="actions"><a class="btn" href="#">Read more ↵</a>
+    <a class="btn alt" href="${gcal(e)}" target="_blank" rel="noopener">📅 Zet in Google Agenda</a></div></div></div>`;
+  }
+  tl.innerHTML=html;
+}
+document.getElementById("go").onclick=render;cat.onchange=render;render();
+</script>
+</body>
+</html>

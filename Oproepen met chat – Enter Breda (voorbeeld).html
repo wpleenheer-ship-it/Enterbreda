@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oproepen – Enter Breda (voorbeeld)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#6a35a8;--ink:#1a1a1a;--purple:#6a35a8;--dark:#2a1445;--green:#8ab800;--muted:#6b6478;--line:#e4dcf0;--soft:#f3eefa;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 48px}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.4);margin-bottom:20px;color:#fff}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:#fff;color:var(--ink);border-radius:10px;padding:10px 16px;font-size:14px;font-weight:500}
+.pill.on{background:var(--dark);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;align-items:start}
+.card{background:#fff;border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .15s}
+.card:not(.open):hover{transform:translateY(-3px)}
+.card.open{grid-column:1/-1;cursor:default}
+.head{height:150px;display:grid;place-items:center;position:relative}
+.open .head{height:90px}
+.av{border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-weight:700;flex:none;border:2px solid #fff}
+.av.xl{width:72px;height:72px;font-size:24px}
+.open .av.xl{width:56px;height:56px;font-size:20px}
+.av.s{width:34px;height:34px;font-size:12px}
+.av.t{width:26px;height:26px;font-size:10px;margin-left:-7px}
+.av.t:first-child{margin-left:0}
+.tags{position:absolute;left:12px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:var(--purple);color:#fff;border-radius:8px;padding:3px 9px;font-size:12px;font-weight:700}
+.body{padding:16px}
+.lbl{display:inline-block;background:#ece4f7;color:var(--purple);border-radius:8px;padding:3px 9px;font-size:12px;font-weight:500}
+.card h2{font-size:18px;line-height:1.25;margin:10px 0 12px;font-weight:500}
+.open h2{font-size:26px;font-weight:700}
+.foot{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
+.det{display:none}
+.open .det{display:block}
+.open .foot{display:none}
+.who{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.who b{display:block}.who span{color:var(--muted);font-size:13px}
+.det p{line-height:1.55;margin:8px 0 16px;max-width:720px}
+.int{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 0;border-top:1px solid var(--line)}
+.int h3{margin:0 0 8px;font-size:18px}
+.stack{display:flex}.stack .av{margin-left:-8px}.stack .av:first-child{margin-left:0}
+.btn{background:var(--green);color:var(--ink);border:0;border-radius:12px;padding:14px 22px;font:700 15px "DM Sans",sans-serif;cursor:pointer}
+.btn:hover{filter:brightness(1.07)}.btn.done{background:var(--dark);color:#fff}
+.chat{background:var(--soft);border-radius:12px;padding:18px}
+.msg{display:flex;gap:10px;margin-bottom:12px;animation:in .25s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.bubble{background:#fff;border-radius:4px 16px 16px 16px;padding:10px 14px;max-width:85%;line-height:1.45}
+.bubble b{display:block;font-size:13px;margin-bottom:2px}
+.bubble i{display:block;font-style:normal;color:var(--muted);font-size:11px;margin-top:4px}
+.me{flex-direction:row-reverse}
+.me .bubble{background:var(--purple);color:#fff;border-radius:16px 4px 16px 16px}
+.me .bubble i{color:#d9c9f0}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.chip{border:1px solid var(--purple);background:#fff;color:var(--purple);border-radius:999px;padding:7px 13px;font:500 13px "DM Sans",sans-serif;cursor:pointer}
+.chip:hover{background:var(--purple);color:#fff}
+.compose{display:flex;gap:8px}
+.compose input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font:inherit}
+.send{background:var(--dark);color:#fff;border:0;border-radius:12px;padding:0 18px;font:700 14px "DM Sans",sans-serif;cursor:pointer}
+.close{float:right;background:var(--soft);border:0;border-radius:10px;padding:8px 12px;font:500 14px "DM Sans",sans-serif;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <span id="res"></span>
+    <div class="pills"><span class="pill">Nieuws</span><span class="pill">Vacature</span><span class="pill on">✓ Oproep</span><span class="pill">Evenement</span><span class="pill">Artikel</span></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+<script>
+var P=['#a16207','#1d4ed8','#ff9800','#6a35a8','#0d9488','#be185d','#4d7c0f','#b91c1c'];
+var G=['#f59e0b,#ef4444','#3b82f6,#6a35a8','#10b981,#0d9488','#ec4899,#8b5cf6','#f97316,#facc15','#6366f1,#06b6d4'];
+function col(s){var h=0;for(var i=0;i<s.length;i++)h+=s.charCodeAt(i);return P[h%P.length]}
+function ini(s){return s.split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase()}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var D=[
+['Ik heb hulp nodig bij mijn lascursus!','Jesse van Dijk','2 uur geleden',['Techniek','Hulp gezocht'],'Mijn TIG-lassen wil nog niet echt lukken. Ken jij iemand die kan lassen en een uurtje over heeft? Ik trakteer op koffie ☕',['Rick Bakker|Jaa leuk, ik weet iemand die kan lassen!','Tess Koning|Mijn vader heeft een werkplaats, ik vraag het even 👍','Mila Lont|Ik doe ook mee als je een groepje maakt!','Sem Peters|Check de open uren op de werkplaats.']],
+['Technasium opdrachtgevers gezocht','Lotte Smit','5 uur geleden',['IoT','Robotics'],'Scholieren van het Technasium zoeken echte opdrachten van bedrijven en studenten. Heb jij een mini-project over?',['Daan Vos|Wij hebben nog een sensor-project liggen!','Noor Aksoy|Leuk, hoeveel uur per week is dat?']],
+['Wie gaat er mee naar het KIVI Jaarcongres?','Bram Hendriks','Gisteren',['AI en ML','Data-analyse'],'11 maart in Eindhoven. Ik wil graag met een groepje reizen, samen met de trein?',['Fleur de Wit|Ik ga mee!','Tim Brouwer|Staat er ook een studentenkorting op?','Eva Jansen|Ja, ik ook. Wie regelt de tickets?']],
+['Wie heeft een beamer te leen?','Sanne Mulder','Gisteren',['Evenement'],'Voor de borrel van vrijdag zoeken we een beamer en een lange HDMI-kabel. Alleen voor één avond.',['Joris Kok|Heb er een, kan hem vrijdag brengen','Lena Bos|Kabel van 10 m heb ik ook']],
+['Medespeler gezocht voor padel','Yusuf Demir','2 dagen geleden',['Sport'],'We zijn met drie en zoeken nog een vierde voor donderdagavond. Niveau maakt niet uit!',['Ivo Maas|Ik ben erbij 🎾','Amy Dekker|Ik ben beginner, is dat ok?','Yusuf Demir|Prima Amy, kom maar!']],
+['Fotograaf gezocht voor de kennismakingsborrel','Charlotte Visser','2 dagen geleden',['Design Thinking'],'Wie wil de borrel vastleggen? Je krijgt natuurlijk gratis drankjes en je naam bij de foto’s.',['Mats Smeets|Ik heb een goede camera, ik doe het!']],
+['Hulp bij Python-opdracht','Kevin Dijkstra','3 dagen geleden',['Web en app','Data-analyse'],'Mijn pandas-code geeft steeds een KeyError. Wie wil even meekijken via Discord of op school?',['Anouk Verhoeven|Stuur de code maar, ik kijk er vanavond naar','Rick Bakker|Meestal een typfout in een kolomnaam 😄']],
+['Studentenbijbaan: allround medewerker','Enter Breda','4 dagen geleden',['Vacature'],'AMT Group zoekt een student als monteur/verspaner. Flexibele uren naast je studie.',['Pim Hoek|Meld je aan via de link, werkt prima!','Sophie Raaijmakers|Hoeveel uur per week?']],
+['Meefietsen naar Eindhoven?','Mees van Loon','5 dagen geleden',['Sport','Evenement'],'Zondag fietstocht, ongeveer 3 uur heen. Tempo is rustig. Wie doet mee?',['Lisa Hermans|Ja, leuk!','Thijs Willems|Is er een terugweg met de trein?','Mees van Loon|Ja, terug met de trein']],
+['Sprekers gezocht voor de Tech Talk','Ciara Jacobs','1 week geleden',['VR en AR','AI en ML'],'In november organiseren we een Tech Talk. Wil jij 10 minuten vertellen over iets wat je bouwt?',['Niels Aarts|Ik kan iets over VR laten zien 🥽','Eline Smits|Tip: nodig ook die lasser van de andere oproep uit 😉']]
+];
+var open=-1,joined={};
+function ava(n,c){return '<span class="av '+c+'" style="background:'+col(n)+'">'+ini(n)+'</span>'}
+function render(){
+  document.getElementById('res').textContent=D.length+' resultaten';
+  var h='';
+  D.forEach(function(d,i){
+    var o=i===open,r=d[5],n=r.length+(joined[i]?1:0);
+    h+='<div class="card'+(o?' open':'')+'" data-i="'+i+'"><div class="head" style="background:linear-gradient(135deg,'+G[i%G.length]+')">'+
+    '<span class="av xl" style="background:'+col(d[1])+'">'+ini(d[1])+'</span><div class="tags">'+d[3].map(function(t){return '<span class="tag">'+t+'</span>'}).join('')+'</div></div>'+
+    '<div class="body"><span class="lbl">Oproep</span>'+(o?'<button class="close" data-x="1">✕ Inklappen</button>':'')+'<h2>'+esc(d[0])+'</h2>'+
+    '<div class="foot"><div class="stack">'+r.slice(0,3).map(function(x){return ava(x.split('|')[0],'t')}).join('')+'</div>'+n+' reacties</div>';
+    if(o){
+      h+='<div class="det"><div class="who">'+ava(d[1],'s')+'<div><b>'+esc(d[1])+'</b><span>'+d[2]+'</span></div></div><p>'+esc(d[4])+'</p>'+
+      '<div class="int"><div><h3>'+n+' anderen zijn geïnteresseerd in deze oproep</h3><div class="stack">'+r.map(function(x){return ava(x.split('|')[0],'s')}).join('')+(joined[i]?'<span class="av s" style="background:#16a34a;font-size:11px">JIJ</span>':'')+'</div></div>'+
+      '<button class="btn'+(joined[i]?' done':'')+'" data-join="1">'+(joined[i]?'✓ Je hebt interesse getoond':'Enter en toon je interesse ↵')+'</button></div>'+
+      '<div class="chat">'+r.map(function(x){var p=x.split('|');var me=p[0]==='Jij';return '<div class="msg'+(me?' me':'')+'">'+(me?'<span class="av s" style="background:#16a34a;font-size:11px">JIJ</span>':ava(p[0],'s'))+'<div class="bubble"><b>'+esc(p[0])+'</b>'+esc(p[1])+'<i>'+(me?'zojuist':'eerder')+'</i></div></div>'}).join('')+
+      '<div class="quick">'+['Jaa leuk, ik weet iemand die kan helpen!','Ik kan helpen 🙌','Ik ben ook geïnteresseerd','Wanneer wil je afspreken?'].map(function(q){return '<button class="chip">'+q+'</button>'}).join('')+'</div>'+
+      '<div class="compose"><input id="inp" placeholder="Schrijf een snel berichtje…" autocomplete="off"><button class="send" data-send="1">Stuur</button></div></div></div>';
+    }
+    h+='</div></div>';
+  });
+  document.getElementById('grid').innerHTML=h;
+}
+function post(t){
+  t=(t||'').trim();if(!t||open<0)return;
+  D[open][5].push('Jij|'+t);joined[open]=true;render();
+  var f=document.getElementById('inp');if(f)f.focus();
+}
+document.getElementById('grid').addEventListener('click',function(e){
+  var t=e.target,c=t.closest('.card');if(!c)return;
+  if(t.dataset.x){open=-1;render();return}
+  if(t.classList.contains('chip')){post(t.textContent);return}
+  if(t.dataset.send){post(document.getElementById('inp').value);return}
+  if(t.dataset.join){if(!joined[open])post('Ik ben geïnteresseerd!');return}
+  if(t.closest('.chat'))return;
+  var i=+c.dataset.i;if(i!==open){open=i;render();document.querySelector('.card.open').scrollIntoView({behavior:'smooth',block:'start'})}
+});
+document.getElementById('grid').addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.id==='inp'){e.preventDefault();post(e.target.value)}});
+render();
+</script>
+</body>
+</html>
