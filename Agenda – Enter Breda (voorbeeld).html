@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agenda – Enter Breda (voorbeeld)</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#5b34a0;--bg2:#44247f;--card:#fff;--text:#1d1530;--muted:#6b6482;--line:rgba(255,255,255,.35);--green:#86b300;--green-d:#6f9700;--purple:#5b34a0;--chip:#fff;--chipt:#44247f;--soft:#efeaf9;--ok:#e5f6c9;--okt:#3d5a00;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#251646;--bg2:#190e33;--card:#2a2046;--text:#f1edfb;--muted:#b0a7ca;--soft:#382c5e;--ok:#34480a;--okt:#d4f08a}}
+:root[data-theme="dark"]{--bg:#251646;--bg2:#190e33;--card:#2a2046;--text:#f1edfb;--muted:#b0a7ca;--soft:#382c5e;--ok:#34480a;--okt:#d4f08a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;font-family:Outfit,system-ui,sans-serif;background:linear-gradient(180deg,var(--bg),var(--bg2));background-attachment:fixed;color:var(--text);min-height:100vh}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 28px;flex-wrap:wrap;gap:10px;color:#fff}
+.logo{font-weight:700;font-size:20px;letter-spacing:.5px}.logo span{font-weight:400;opacity:.85}
+nav{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+nav a{color:#fff;text-decoration:none;font-size:14px;font-weight:500;border-bottom:2px solid transparent;padding:4px 0}nav a.on{border-color:var(--green)}
+.wrap{max-width:900px;margin:0 auto;padding:10px 20px 70px}
+h1{color:#fff;font-size:clamp(28px,5vw,40px);margin:26px 0 6px}
+.sub{color:#fff;opacity:.85;margin:0 0 22px;font-size:15px}
+.next{background:var(--card);border-radius:16px;display:flex;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.25);margin-bottom:26px}
+.next .art{flex:0 0 38%;display:grid;place-items:center;font-size:64px;min-height:190px}
+.next .body{padding:22px 24px;flex:1}
+.kick{font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--green)}
+.next h2{margin:6px 0 8px;font-size:24px}
+.big{font-size:34px;font-weight:700;color:var(--purple);margin:2px 0 8px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .big{color:#c4aaff}}
+:root[data-theme="dark"] .big{color:#c4aaff}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.chip{border:0;background:var(--chip);color:var(--chipt);font:500 13px Outfit,sans-serif;padding:7px 14px;border-radius:7px;cursor:pointer}
+.chip.on{background:#2b1456;color:#fff;box-shadow:inset 0 0 0 1px #fff6}
+.count{color:#fff;font-size:13px;margin:6px 0 20px;opacity:.85}
+.tl{position:relative}.tl::before{content:"";position:absolute;left:27px;top:6px;bottom:0;width:2px;background:var(--line)}
+.month{color:#fff;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;margin:26px 0 14px 78px;font-weight:600}
+.it{display:flex;gap:18px;margin-bottom:16px;position:relative}
+.dt{flex:0 0 56px;height:62px;border-radius:12px;background:#fff;color:var(--purple);text-align:center;display:flex;flex-direction:column;justify-content:center;line-height:1.05;z-index:1;box-shadow:0 0 0 5px rgba(91,52,160,.9)}
+.dt b{font-size:22px}.dt small{font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.card{flex:1;background:var(--card);border-radius:14px;display:flex;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.card .art{flex:0 0 112px;display:grid;place-items:center;font-size:40px}
+.card .in{padding:14px 18px;flex:1;min-width:0}
+.top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.ok{background:var(--ok);color:var(--okt);font-size:11px;padding:3px 8px;border-radius:5px;font-weight:500}
+.rel{font-size:12px;font-weight:600;color:var(--purple)}.rel.hot{background:var(--green);color:#fff;padding:3px 8px;border-radius:5px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rel:not(.hot){color:#c4aaff}}
+:root[data-theme="dark"] .rel:not(.hot){color:#c4aaff}
+.card h3{margin:0 0 6px;font-size:17px}
+.meta{color:var(--muted);font-size:13px;display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tag{background:var(--purple);color:#fff;font-size:11px;padding:3px 9px;border-radius:6px;font-weight:500}
+.act{display:flex;gap:8px;flex-wrap:wrap}
+.btn{background:var(--green);color:#fff;border:0;border-radius:8px;padding:8px 14px;font:600 13px Outfit,sans-serif;text-decoration:none;cursor:pointer}.btn:hover{background:var(--green-d)}
+.btn.alt{background:var(--soft);color:var(--purple)}.btn.alt:hover{background:var(--purple);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.alt{color:#d7c6ff}}
+:root[data-theme="dark"] .btn.alt{color:#d7c6ff}
+.search{background:var(--card);border-radius:12px;padding:14px 18px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;box-shadow:0 6px 24px rgba(0,0,0,.22);font-size:14px;margin-bottom:22px}
+.search select{font:inherit;padding:9px 12px;border:1px solid var(--muted);border-radius:8px;background:var(--card);color:var(--text)}
+.empty{color:#fff;text-align:center;padding:40px 0}
+footer{color:#fff;opacity:.7;text-align:center;font-size:12px;padding-bottom:30px}
+@media (max-width:620px){header{padding:12px 16px}.next{flex-direction:column}.next .art{min-height:110px}.card .art{flex-basis:64px;font-size:28px}.month{margin-left:0}.it{gap:12px}.dt{flex-basis:48px}.tl::before{left:23px}}
+</style>
+</head>
+<body>
+<header><div class="logo">ENTER <span>BREDA</span></div>
+<nav><a href="#">Community</a><a href="#">Onderwijs</a><a href="#">Bedrijven</a><a href="#">Studentenorganisaties</a><a href="#" class="on">Agenda</a></nav></header>
+<div class="wrap">
+<h1>Wat komt eraan?</h1>
+<p class="sub">Alle aankomende evenementen in Breda, op volgorde. Eén klik en het staat in je agenda.</p>
+<div class="search"><span>Ik ben een</span>
+<select id="who"><option>Student</option><option>Professional</option><option>Bedrijf</option></select>
+<span>op zoek naar</span>
+<select id="kind"><option value="all">alle evenementen</option><option>Netwerken</option><option>Bedrijvendag</option><option>Lezing &amp; workshop</option><option>Borrel &amp; social</option></select>
+<button class="btn" id="go">Find events ↵</button></div>
+<div id="next"></div>
+<div class="bar" id="per"></div>
+<div class="bar" id="tags"></div>
+<div class="count" id="count"></div>
+<div class="tl" id="tl"></div>
+</div>
+<footer>Voorbeeldpagina – evenementen en datums zijn fictief. Pas de <code>events</code>-lijst aan.</footer>
+<script>
+const events=[
+ {d:"2026-10-08",t:"WTB café",tags:["Netwerken"],time:"17:00–20:00",loc:"Café De Beyerd, Breda",org:"KIVI",e:"🍻",g:"#7c4dff,#b388ff"},
+ {d:"2026-10-15",t:"Tech Challenge: Digital Twins in de Landbouw",tags:["Robotics","Data-analyse","Design Thinking"],time:"12:00–17:00",loc:"Avans, Lovensdijkstraat",org:"Pixelfarming Robotics",e:"🌱",g:"#00897b,#4db6ac"},
+ {d:"2026-10-22",t:"ATIx Bedrijvendag",tags:["Robotics","Design Thinking","Web en app"],time:"13:00–17:00",loc:"Avans Hogeschool, Breda",org:"Avans ATIx",e:"🤝",g:"#5b34a0,#9575cd"},
+ {d:"2026-11-05",t:"Netwerkbijeenkomst bij s.v. WIM",tags:["Netwerken"],time:"18:30–21:30",loc:"Gebouw Avans, Hogeschoollaan",org:"KIVI",e:"🏢",g:"#1565c0,#64b5f6"},
+ {d:"2026-11-19",t:"Pizzalezing Equans",tags:["Robotics"],time:"16:30–19:30",loc:"Equans, Breda",org:"Equans",e:"🍕",g:"#e65100,#ffb74d"},
+ {d:"2026-12-03",t:"KIVI-Jaarcongres: Blueprint for a Stronger Europe",tags:["Netwerken","Data-analyse"],time:"09:30–17:00",loc:"Chassé Theater, Breda",org:"KIVI",e:"🇪🇺",g:"#283593,#7986cb"},
+ {d:"2026-12-10",t:"The Offline Club",tags:["Netwerken"],time:"19:00–22:00",loc:"Grote Markt, Breda",org:"Enter Breda",e:"📵",g:"#c2185b,#f48fb1"}
+];
+[["Borrel & social",["Student","Professional"]],["Lezing & workshop",["Student"]],["Bedrijvendag",["Student","Bedrijf"]],["Netwerken",["Student","Professional","Bedrijf"]],["Lezing & workshop",["Student"]],["Netwerken",["Student","Professional","Bedrijf"]],["Borrel & social",["Student","Professional"]]].forEach(([k,w],i)=>{events[i].kind=k;events[i].who=w});
+const M=["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+const p=n=>String(n).padStart(2,"0"),today=new Date();today.setHours(0,0,0,0);
+const date=e=>new Date(e.d+"T00:00:00"),days=e=>Math.round((date(e)-today)/864e5);
+const rel=n=>n===0?"Vandaag":n===1?"Morgen":"Over "+n+" dagen";
+function gcal(e){const[a,b]=e.time.split("–").map(s=>s.split(":").map(Number));const s=date(e),n=date(e);s.setHours(a[0],a[1]);n.setHours(b[0],b[1]);if(n<=s)n.setDate(n.getDate()+1);
+ const f=d=>d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+"T"+p(d.getHours())+p(d.getMinutes())+"00";
+ return"https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(e.t)+"&dates="+f(s)+"/"+f(n)+"&ctz=Europe/Amsterdam&location="+encodeURIComponent(e.loc)+"&details="+encodeURIComponent("Georganiseerd door "+e.org+" – via Enter Breda");}
+const up=events.filter(e=>days(e)>=0).sort((a,b)=>a.d.localeCompare(b.d));
+let per="all",tag="all";
+const periods=[["all","Alles"],["week","Deze week"],["month","Deze maand"]];
+const alltags=["all",...new Set(up.flatMap(e=>e.tags))];
+function chips(){
+ document.getElementById("per").innerHTML=periods.map(([k,l])=>`<button class="chip ${per===k?"on":""}" data-p="${k}">${l}</button>`).join("");
+ document.getElementById("tags").innerHTML=alltags.map(k=>`<button class="chip ${tag===k?"on":""}" data-t="${k}">${k==="all"?"Alle thema's":k}</button>`).join("");
+}
+function render(){
+ chips();
+ const who=document.getElementById("who").value,kind=document.getElementById("kind").value;
+ const list=up.filter(e=>{const n=days(e);return e.who.includes(who)&&(kind==="all"||e.kind===kind)&&(per==="all"||(per==="week"&&n<=7)||(per==="month"&&date(e).getMonth()===today.getMonth()&&date(e).getFullYear()===today.getFullYear()))&&(tag==="all"||e.tags.includes(tag))});
+ const nx=list[0];
+ document.getElementById("next").innerHTML=nx?`<div class="next"><div class="art" style="background:linear-gradient(135deg,${nx.g})">${nx.e}</div><div class="body"><div class="kick">Eerstvolgende</div><h2>${nx.t}</h2><div class="big">${rel(days(nx))}</div><div class="meta"><span>📅 ${date(nx).getDate()} ${M[date(nx).getMonth()]} · ${nx.time.replace("–"," – ")}</span><span>📍 ${nx.loc}</span></div><div class="act"><a class="btn" href="${gcal(nx)}" target="_blank" rel="noopener">📅 Zet in Google Agenda</a><a class="btn alt" href="#">Meer info ↵</a></div></div></div>`:"";
+ document.getElementById("count").textContent=list.length+" aankomende evenement"+(list.length===1?"":"en");
+ let h="",cur="";
+ for(const e of list){const d=date(e),mk=M[d.getMonth()]+" "+d.getFullYear(),n=days(e);
+  if(mk!==cur){cur=mk;h+=`<div class="month">${mk}</div>`}
+  h+=`<div class="it"><div class="dt"><b>${d.getDate()}</b><small>${M[d.getMonth()].slice(0,3)}</small></div><div class="card"><div class="art" style="background:linear-gradient(135deg,${e.g})">${e.e}</div><div class="in"><div class="top"><span class="ok">Evenement: Aankomend</span><span class="rel ${n<=7?"hot":""}">${rel(n)}</span></div><h3>${e.t}</h3><div class="meta"><span>🕒 ${e.time.replace("–"," – ")}</span><span>📍 ${e.loc}</span></div><div class="tags">${e.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div><div class="act"><a class="btn" href="${gcal(e)}" target="_blank" rel="noopener">📅 Google Agenda</a><a class="btn alt" href="#">Read more ↵</a></div></div></div></div>`}
+ document.getElementById("tl").innerHTML=h||'<div class="empty">Geen evenementen gevonden voor deze selectie.</div>';
+}
+document.addEventListener("click",x=>{const b=x.target.closest(".chip");if(!b)return;if(b.dataset.p)per=b.dataset.p;if(b.dataset.t)tag=b.dataset.t;render()});
+["who","kind"].forEach(i=>document.getElementById(i).onchange=render);
+document.getElementById("go").onclick=render;
+render();
+</script>
+</body>
+</html>
