@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="nl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Enter Breda quiz</title>
+<style>
+:root{--p1:#3f2579;--p2:#6b42b8;--lime:#86b300;--limeD:#6d9300;--ink:#26194a;--ok:#2e9b4f;--bad:#c93a4b}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;color:#fff;
+background:linear-gradient(160deg,var(--p1),var(--p2));overflow-x:hidden;user-select:none;-webkit-user-select:none}
+header{display:flex;align-items:center;padding:20px 5vw;background:rgba(255,255,255,.07)}
+.logo{font-weight:800;letter-spacing:.02em;font-size:1.5rem;line-height:1}
+.logo small{display:block;font-size:.75rem;font-weight:600;letter-spacing:.12em}
+.prog{margin-left:auto;display:flex;gap:8px}
+.prog i{width:34px;height:8px;border-radius:4px;background:rgba(255,255,255,.25)}
+.prog i.on{background:var(--lime)}
+main{max-width:900px;margin:0 auto;padding:5vh 5vw 8vh;text-align:center;min-height:calc(100% - 70px);display:flex;flex-direction:column;justify-content:center;align-items:center}
+h1{font-size:clamp(2.2rem,6vw,3.8rem);line-height:1.1;margin:0 0 .5em;font-weight:800}
+h2{font-size:clamp(1.6rem,4.2vw,2.6rem);line-height:1.2;margin:0 0 1em;font-weight:800}
+p{font-size:clamp(1.1rem,2.4vw,1.5rem);line-height:1.5;margin:0 0 1.6em;max-width:36em}
+.btn{font:inherit;font-weight:700;font-size:1.4rem;background:var(--lime);color:#14200a;border:0;border-radius:12px;padding:18px 36px;cursor:pointer;min-height:64px}
+.btn:active{background:var(--limeD);transform:scale(.98)}
+.info{background:rgba(255,255,255,.12);border-left:6px solid var(--lime);border-radius:12px;padding:20px 26px;text-align:left;margin-bottom:2em;font-size:clamp(1.1rem,2.4vw,1.45rem);line-height:1.45;max-width:36em}
+.opts{display:grid;gap:14px;width:100%;margin-bottom:1.6em}
+.opt{font:inherit;font-size:clamp(1.1rem,2.4vw,1.4rem);text-align:left;background:#fff;color:var(--ink);border:3px solid #fff;border-radius:14px;padding:18px 22px;display:flex;gap:16px;align-items:center;cursor:pointer;min-height:72px;width:100%}
+.opt b{flex:none;width:40px;height:40px;border-radius:50%;background:#ece6f7;display:grid;place-items:center;font-size:1.1rem}
+.opt:active{transform:scale(.99)}
+.opt.ok{background:#e4f6e9;border-color:var(--ok)}.opt.ok b{background:var(--ok);color:#fff}
+.opt.bad{background:#fbe6e9;border-color:var(--bad)}.opt.bad b{background:var(--bad);color:#fff}
+.opt.dim{opacity:.55}
+.opts.locked .opt{cursor:default}
+.fb{min-height:2em;font-size:1.3rem;font-weight:700;margin-bottom:1em}
+.score{font-size:clamp(3rem,10vw,5.5rem);font-weight:800;margin:0 0 .2em;color:var(--lime)}
+.qr{background:#fff;border-radius:16px;padding:16px;width:min(260px,60vw);margin:0 auto 1.2em}
+.qr svg{display:block;width:100%;height:auto}
+.link{background:none;border:0;color:#fff;text-decoration:underline;font:inherit;font-size:1.1rem;cursor:pointer;padding:14px}
+.hide{display:none!important}
+@media (prefers-reduced-motion:no-preference){.screen{animation:in .25s ease-out}@keyframes in{from{opacity:0;transform:translateY(10px)}}}
+</style></head><body>
+<header><div class="logo">ENTER<small>BREDA</small></div><div class="prog" id="prog"></div></header>
+<main id="app"></main>
+<canvas id="cf" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9"></canvas>
+<script>
+var Q=[
+ {info:"Op 3 december organiseert Enter Breda een hackathon waar we zelf AI-agents gaan bouwen.",
+  q:"Wat maakt een AI-agent anders dan een gewone chatbot?",
+  o:["Een agent kan zelf acties uitvoeren, zoals iets opzoeken of een mail versturen","Een agent gebruikt een veel groter en slimmer taalmodel dan een chatbot","Een agent is getraind op meer data dan een chatbot"],a:0},
+ {info:"Enter Breda organiseert een lasworkshop.",
+  q:"Welke metalen kun je met gewone lastechnieken n\u00edet direct aan elkaar lassen?",
+  o:["Staal en RVS (roestvrij staal)","Aluminium en staal","Koper en nikkel"],a:1},
+ {info:"RSA organiseert in januari een hackathon!",
+  q:"Wat is een hackathon?",
+  o:["Een evenement waarbij teams in korte tijd samen een oplossing of prototype bouwen voor een uitdaging","Een wedstrijd waarin je zo snel mogelijk het computersysteem van een bedrijf binnendringt","Een beurs waar tech-bedrijven hun nieuwste software aan studenten presenteren"],a:0},
+ {q:"Eindhoven heeft chips, Rotterdam heeft containers\u2026 en Breda?",
+  o:["High-tech, chips en onderzoek","Toegepaste tech, robotica en creatieve tech","Logistiek, havens en energie"],a:1},
+ {q:"Je studeert tech en wilt bedrijven leren kennen, workshops volgen en je netwerk opbouwen. Waar kun je het beste terecht?",
+  o:["Enter Breda","Dat moet je helemaal zelf uitzoeken","Dat kan pas na je afstuderen"],a:0}
+];
+var QR={n:25,d:"M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM10 0h1v1h-1zM12 0h1v1h-1zM16 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM11 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM9 3h1v1h-1zM10 3h1v1h-1zM12 3h1v1h-1zM13 3h1v1h-1zM15 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM13 4h1v1h-1zM14 4h1v1h-1zM15 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM10 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM10 7h1v1h-1zM12 7h1v1h-1zM14 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM1 8h1v1h-1zM2 8h1v1h-1zM3 8h1v1h-1zM6 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM21 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM0 9h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM16 9h1v1h-1zM19 9h1v1h-1zM23 9h1v1h-1zM0 10h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM11 10h1v1h-1zM12 10h1v1h-1zM13 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM20 10h1v1h-1zM0 11h1v1h-1zM1 11h1v1h-1zM2 11h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM13 11h1v1h-1zM15 11h1v1h-1zM16 11h1v1h-1zM18 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM1 12h1v1h-1zM2 12h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM10 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM18 12h1v1h-1zM20 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM24 12h1v1h-1zM2 13h1v1h-1zM3 13h1v1h-1zM11 13h1v1h-1zM12 13h1v1h-1zM13 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM18 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM24 13h1v1h-1zM1 14h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM14 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM20 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM0 15h1v1h-1zM2 15h1v1h-1zM3 15h1v1h-1zM8 15h1v1h-1zM9 15h1v1h-1zM11 15h1v1h-1zM18 15h1v1h-1zM19 15h1v1h-1zM20 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM1 16h1v1h-1zM2 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM12 16h1v1h-1zM14 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM21 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM24 16h1v1h-1zM8 17h1v1h-1zM9 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM22 17h1v1h-1zM24 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM10 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM22 18h1v1h-1zM23 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM9 19h1v1h-1zM11 19h1v1h-1zM13 19h1v1h-1zM14 19h1v1h-1zM15 19h1v1h-1zM16 19h1v1h-1zM20 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM13 20h1v1h-1zM14 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM21 20h1v1h-1zM23 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM8 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM22 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM10 22h1v1h-1zM14 22h1v1h-1zM17 22h1v1h-1zM18 22h1v1h-1zM20 22h1v1h-1zM22 22h1v1h-1zM23 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM9 23h1v1h-1zM10 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM13 23h1v1h-1zM14 23h1v1h-1zM15 23h1v1h-1zM17 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM11 24h1v1h-1zM17 24h1v1h-1zM18 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1z"};
+
+var cv=document.getElementById("cf"),cx=cv.getContext("2d"),P=[],run=false,COL=["#86b300","#ffffff","#b79af0","#ffd23f","#ff6b9d"];
+function size(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio}
+size();addEventListener("resize",size);
+function confetti(n,x,y){
+ if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+ var r=devicePixelRatio;
+ for(var k=0;k<n;k++){var a=Math.random()*Math.PI*2,v=(8+Math.random()*(n>100?14:9))*r;
+  P.push({x:x*r,y:y*r,vx:Math.cos(a)*v,vy:Math.sin(a)*v-(n>100?4:7)*r,w:(6+Math.random()*6)*r,h:(10+Math.random()*8)*r,rot:Math.random()*6,vr:(Math.random()-.5)*.4,c:COL[k%COL.length],life:110+Math.random()*50})}
+ if(!run){run=true;requestAnimationFrame(tick)}}
+function tick(){cx.clearRect(0,0,cv.width,cv.height);
+ P=P.filter(function(q){return q.life>0&&q.y<cv.height+40});
+ P.forEach(function(q){q.vy+=.35*devicePixelRatio;q.vx*=.99;q.x+=q.vx;q.y+=q.vy;q.rot+=q.vr;q.life--;
+  cx.save();cx.translate(q.x,q.y);cx.rotate(q.rot);cx.globalAlpha=Math.min(1,q.life/30);cx.fillStyle=q.c;cx.fillRect(-q.w/2,-q.h/2,q.w,q.h);cx.restore()});
+ if(P.length)requestAnimationFrame(tick);else{run=false;cx.clearRect(0,0,cv.width,cv.height)}}
+var app=document.getElementById("app"),prog=document.getElementById("prog"),i=0,score=0,L="abc";
+function bar(k){prog.innerHTML=Q.map(function(_,j){return '<i class="'+(j<=k?'on':'')+'"></i>'}).join("")}
+function start(){i=0;score=0;bar(-1);
+ app.innerHTML='<div class="screen"><h1>Enter Breda,<br>the city full of tech</h1><p>Vijf korte vragen over tech in Breda. Tik op je antwoord.</p><button class="btn" id="go">Start de quiz</button></div>';
+ document.getElementById("go").onclick=show}
+function show(){var x=Q[i];bar(i);
+ var h='<div class="screen">'+(x.info?'<div class="info">'+x.info+'</div>':'')+'<h2>'+x.q+'</h2><div class="opts" id="opts">';
+ x.o.forEach(function(t,k){h+='<button class="opt" data-k="'+k+'"><b>'+L[k]+'</b><span>'+t+'</span></button>'});
+ h+='</div><div class="fb" id="fb"></div><button class="btn hide" id="next">'+(i<Q.length-1?'Volgende vraag':'Bekijk je resultaat')+'</button></div>';
+ app.innerHTML=h;
+ var box=document.getElementById("opts");
+ box.onclick=function(e){var b=e.target.closest(".opt");if(!b||box.classList.contains("locked"))return;
+  var k=+b.dataset.k;box.classList.add("locked");
+  [].forEach.call(box.children,function(c,j){if(j===x.a)c.classList.add("ok");else if(j===k)c.classList.add("bad");else c.classList.add("dim")});
+  var right=k===x.a;if(right){score++;var r=b.getBoundingClientRect();confetti(70,r.left+r.width/2,r.top+r.height/2)}
+  document.getElementById("fb").textContent=right?"Goed zo!":"Net niet. Het goede antwoord staat groen.";
+  document.getElementById("next").classList.remove("hide")};
+ document.getElementById("next").onclick=function(){i++;i<Q.length?show():end()}}
+function end(){bar(Q.length);
+ var s='<svg viewBox="-2 -2 '+(QR.n+4)+' '+(QR.n+4)+'" shape-rendering="crispEdges" role="img" aria-label="QR-code om je aan te melden bij Enter Breda"><rect x="-2" y="-2" width="'+(QR.n+4)+'" height="'+(QR.n+4)+'" fill="#fff"/><path d="'+QR.d+'" fill="#26194a"/></svg>';
+ app.innerHTML='<div class="screen"><div class="score">'+score+' / '+Q.length+'</div><h2>'+(score===Q.length?"Alles goed!":score>=3?"Sterk gedaan!":"Goed geprobeerd!")+'</h2><p>Meld je aan bij Enter Breda en ontmoet bedrijven, volg workshops en bouw je netwerk op.</p><div class="qr">'+s+'</div><p style="margin-bottom:.8em">Scan de QR-code om je aan te melden</p><button class="link" id="again">Opnieuw spelen</button></div>';
+ document.getElementById("again").onclick=start;
+ if(score>=3){confetti(160,innerWidth*.25,innerHeight*.7);confetti(160,innerWidth*.75,innerHeight*.7);setTimeout(function(){confetti(120,innerWidth/2,innerHeight*.5)},350)}}
+start();
+</script></body></html>
